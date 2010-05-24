@@ -98,8 +98,23 @@ taggit_list_machine(const char *file)
 
     lst = list(&f);
     if (lst == NULL) {
-        fprintf(stderr, "File does not contain valid data: \"%s\"\n", file);
-        return;
+        /* fprintf(stderr, "File does not contain valid data: \"%s\"\n", file); */
+        /* return; */
+		key_val_str("filename", (char*)file);
+		etx();
+		key_val_str("artist", "");
+		etx();
+		key_val_str("album", "");
+		etx();
+		key_val_str("tracknumber", "");
+		etx();
+		key_val_str("tracktitle", "");
+		etx();
+		key_val_str("year", "");
+		etx();
+		key_val_str("genre", "");
+		etx();
+		return;
     }
 
     key_val_str("filename", (char*)file);
