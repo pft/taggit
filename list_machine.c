@@ -114,6 +114,8 @@ taggit_list_machine(const char *file)
 		etx();
 		key_val_str("genre", "");
 		etx();
+		key_val_str("comment", "");
+		etx();
 		return;
     }
 
@@ -138,6 +140,8 @@ taggit_list_machine(const char *file)
     key_val_int("year", lst->year);
     etx();
     key_val_str("genre", lst->genre);
+    etx();
+    key_val_str("comment", lst->comment);
     etx();
     if (lst->is_va) {
         key_val_str("is_va", "true");

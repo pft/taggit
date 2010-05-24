@@ -137,6 +137,7 @@ list(struct taggit_file *file)
     lst->tracknumber = taglib_tag_track(tag);
     lst->year = taglib_tag_year(tag);
     lst->genre = taglib_tag_genre(tag);
+	lst->comment = taglib_tag_comment(tag);
     lst->va = taggit_tag_va(file->type, lst->tagtype, tag);
     if (lst->va != NULL)
         lst->is_va = 1;
