@@ -33,6 +33,7 @@ extern "C" {
 #endif
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <strings.h>
 
@@ -102,6 +103,73 @@ typedef int boolean;
  */
 #define TAGGIT_MAP_MAX 3
 
+extern uint32_t taggit_options;
+
+/**
+ * Check whether an option is set.
+ *
+ * This macro works on `#taggit_options'.
+ *
+ * @code
+ *    if (IS_SET(FOO)) {
+ *        // FOO is set
+ *    } else if (IS_SET(FOO | BAR)) {
+ *        // FOO *and* BAR are set
+ *    } else if (IS_SET(FOO) || IS_SET(BAR)) {
+ *        // FOO *or* bar are set
+ *    }
+ * @endcode
+ *
+ * @param  OPT  A bitmask (32-bit max) to compare against `#taggit_options'.
+ *
+ * @return (macro)
+ * @sideeffects none
+ */
+#define IS_SET(OPT) ((taggit_options & (OPT)) == OPT)
+
+/**
+ * Set an option bit in `#taggit_options'.
+ *
+ * @param  OPT  A bitmask to set in `#taggit_options'.
+ *
+ * @return (macro)
+ * @sideeffects none
+ */
+#define SET_OPT(OPT) (taggit_options |= OPT)
+
+/**
+ * Unset an option bit in `#taggit_options'.
+ *
+ * @param  OPT  A bitmask to unset in `#taggit_options'.
+ *
+ * @return (macro)
+ * @sideeffects none
+ */
+#define UNSET_OPT(OPT) (taggit_options &= ~(OPT))
+
+/**
+ * Toggle an option bit in `#taggit_options'.
+ *
+ * @param  OPT  A bitmask to toggle in `#taggit_options'.
+ *
+ * @return (macro)
+ * @sideeffects none
+ */
+#define TOGGLE_OPT(OPT) (taggit_options ^= (OPT))
+
+/*
+ * Bit value macros for `#taggit_options'.
+ */
+
+/**
+ * Print an empty value list when a file does not contain meta information.
+ *
+ * Normally, taggit would error our in such situations. But some frontends
+ * may want to get an empty list to reduce the number of codepaths in their
+ * code.
+ */
+#define TAGGIT_LIST_ALLOW_EMPTY_TAGS    (1 << 0)
+
 /** information returned by the list() function */
 struct taggit_list {
     char *filetype;
@@ -133,7 +201,7 @@ enum tag_id {
     T_ALBUM,
     T_COMPILATION,
     T_GENRE,
-	T_COMMENT,
+    T_COMMENT,
     T_TRACKTITLE,
     T_TRACKNUMBER,
     T_YEAR
